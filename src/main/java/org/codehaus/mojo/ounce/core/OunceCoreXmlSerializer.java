@@ -179,11 +179,6 @@ public class OunceCoreXmlSerializer
             }
 
             String fullPath = projectPath;
-            String startsWithCheck = "." + File.separator;
-            if ( !fullPath.startsWith( "./" ) )
-            {
-                fullPath = startsWithCheck + projectPath;
-            }
             project.setAttributeNS( null, "path", fullPath );
             project.setAttributeNS( null, "language_type", "2" );
 
@@ -539,10 +534,6 @@ public class OunceCoreXmlSerializer
             Node node = (Node) list.get( i );
             NamedNodeMap attributes = node.getAttributes();
             String path = attributes.getNamedItem( "path" ).getNodeValue();
-            if ( !relPath.startsWith( "./" ) )
-            {
-                relPath = "./" + relPath;
-            }
             if ( relPath.equals( path ) )
             {
                 return true;

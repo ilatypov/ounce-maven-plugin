@@ -193,11 +193,17 @@ public class ApplicationMojo
 
         if ( excludes != null && excludes.length > 0 )
         {
+            for (int i = 0; i < excludes.length; i++) {
+                this.getLog().debug( "Adding an exclude: " + excludes[i] );
+            }
             selector.setExcludes( excludes );
         }
 
         if ( includes != null && includes.length > 0 )
         {
+            for (int i = 0; i < includes.length; i++) {
+                this.getLog().debug( "Adding an include: " + includes[i] );
+            }
             selector.setIncludes( includes );
         }
 
@@ -210,6 +216,7 @@ public class ApplicationMojo
 
             if ( selector.isSelected( new ProjectFileInfo( prj.getBasedir() ) ) || prj == project )
             {
+                this.getLog().debug( "Adding selected module: " + prj.getArtifactId() );
                 coreProjects.add( prj );
             }
         }
@@ -226,19 +233,7 @@ public class ApplicationMojo
     protected List getIncludedModules()
         throws IOException
     {
-
-        /*
-         * first we need to prefilter the reactor projects list. instead of including only the current project's
-         * children, it includes everything we need to build a prefilter based on the current project's path and only
-         * include projects with a matching path.
-         */
-        File baseDir = project.getBasedir();
-        String[] preFilterIncludes = new String[1];
-        preFilterIncludes[0] = "**/" + baseDir.getName() + "/**";
-        List preFilteredProjects = getSelectedModules( projects, preFilterIncludes, null );
-
-        // now do the normal filtering
-        List includedProjects = getSelectedModules( preFilteredProjects, includes, excludes );
+        List includedProjects = getSelectedModules( projects, includes, excludes );
 
         // now make them beans
         return convertToBeans( includedProjects );
