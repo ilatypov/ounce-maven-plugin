@@ -17,7 +17,7 @@ It also checks again that fullpaths are working in all cases-->
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-artifact</artifactId>
-      <version>2.0.6</version>
+      <version>3.5.0</version>
     </dependency>
   </dependencies>
 	<build>
